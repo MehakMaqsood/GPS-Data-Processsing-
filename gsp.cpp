@@ -1,23 +1,17 @@
 // Copyright 2022 19733
-// 
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-// 
-//     http://www.apache.org/licenses/LICENSE-2.0
-// 
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
 // limitations under the License.
 
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <vector>
+#include <sstream>
+//#include <bits/stdc++.h>
 using namespace std;
 
+
 int main(int argc, char **argv){
+    
     string file_name=argv[1];
     string line;
     ifstream inFile;
@@ -29,30 +23,65 @@ int main(int argc, char **argv){
     else{
        //READ LINE BY LINE;
        while(!inFile.eof()){
-            //char z;
+
             string s;
             int c=0;
-            getline(inFile, line);
-            //cout<<line<<endl;  
-            //SAVE GPGGA      
+            getline(inFile, line);  
             for(int i=1; i<=5;i++){
-                //cout<<line[i];
                 s+=line[i];
             }
-            //cout<<s;
-            //check GPGGA = s
+
             if(s=="GPGGA"){
-                cout<<"matt is helpful"<<endl;
+
                 c++;
+                string str=line;
+                vector<string> v;
+
+                stringstream ss(str);
+
+                while (ss.good()) {
+                    string substr;
+                    getline(ss, substr, ',');
+                    v.push_back(substr);
+                }
+
+                for( size_t i=1; i< v.size(); i++){
+                    if(i==1){
+                        cout<<"Time: "<<v[i]<<endl;
+                    }
+                    if(i==2){
+                       
+                        cout<<"     Latitude: "<<v[i]<<" "; 
+                            
+                    }
+
+                    if(i==3){
+                        cout<<v[i]<<endl;
+                    }
+                    if(i==4){
+                        cout<<"     Longtitude: "<<v[i]<<" ";
+                    }
+                    if(i==5){
+                        cout<<v[i]<<endl;  
+                    }
+                    if(i==6){
+                        cout<<"     Fix Quality: "<<v[i]<<endl;
+                    }
+                    if(i==9){
+                        cout<<"     Altitude: "<<v[i]<<" ";
+                    }
+                    if(i==10){
+                        cout<<v[i]<<endl;
+                    }
+                    
+                }
             }
             else{
-                cout<<"fail"<<endl;
+                //cout<<"fail"<<endl;
                 continue;
-
             }
-            cout<<c;
-            //break;
+
     }                 
-    //cout<<"File ended";
+
     }
 }
